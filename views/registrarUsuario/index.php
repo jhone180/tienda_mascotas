@@ -25,7 +25,7 @@
                 <input type="password" name="contrasena2" id="" require>
             </p>
             <p>
-                <input type="submit" value="Registrar Usuario">
+                <button type="submit" id="Registrar Usuario">Registar Usuario</button>
             </p>
 
         </form>

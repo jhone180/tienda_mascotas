@@ -33,7 +33,7 @@
                 <input type="text" name="cantidad" id="" require>
             </p>
             <p>
-                <label for="categoria">Categoria</label> <br>
+                <label for="categoria">Categoria</label> <br><br>
                 <select name="categoria" id="categoria">
                     <?php 
                         require_once 'controller/AccionesCategorias.php';
@@ -41,13 +41,15 @@
                         $categorias->mostrarCategorias();
                     ?>
                 </select>
+                <br>
+                <br>
             </p>
             <p>
-            <label for="imagen">Imagen/Imagenes:</label>
+            <label for="imagen">Imagen/Imagenes:</label><br>
 			<input type="file" name="imagen[]" id="imagen" accept="image/*" multiple required>
             </p>
             <p>
-                <input type="submit" value="Registrar Producto">
+                <button type="submit" id="Registrar Producto">Registrar Producto</button>
             </p>
 
         </form>
