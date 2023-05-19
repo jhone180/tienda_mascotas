@@ -19,7 +19,7 @@ class Productos implements IModel{
 
     protected $_nomTabla = "productos";
 
-    protected $_primaryKey = "id_producto";
+    protected $_primaryKey = "id";
 
     public function getId(){
         return $this->id;

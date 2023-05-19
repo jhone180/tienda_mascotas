@@ -8,4 +8,10 @@ define('USER', 'root');
 define('PASSWORD', '');
 define('CHARSET', 'utf8mb4');
 
+function printR($var){
+    echo '<pre>';
+    die(print_r($var));
+    echo '</pre>';
+}
+
 ?>

@@ -6,10 +6,18 @@ require_once 'controller/AccionesImagen.php';
 
 class AccionesProductos{
     public $DAOProductos;
+    public $AccionesImagen;
     public $obj;
+    public $idProducto;
+    public $nombreProducto;
+    public $precio;
+    public $descripcion;
+    public $porcentajeDescuento;
+    public $descuento;
 
     public function __construct() {
         $this->DAOProductos = new DAOProductos();
+        $this->AccionesImagen = new AccionesImagen();
         $this->obj = new Productos();
     }
 
@@ -50,6 +58,92 @@ class AccionesProductos{
           }
 
           echo $htmlResultados;
+    }
+
+    //Funciones para la pagina de detalles
+    function procesarImagenes(){
+        $this->idProducto = $_GET['id'];
+        if($this->idProducto != null && $this->idProducto != ''){
+            $html = $this->procesarSolicitud($this->idProducto);
+            echo $html;
+        } else {
+            $error = "No se especificó un ID de producto válido";
+            http_response_code(400);
+            echo $error;
+            exit();
+        }
+    }
+    
+    function procesarSolicitud($idProducto){
+        try{
+            $resultado = $this->DAOProductos->consultar($idProducto);
+            $this->informacionProducto($resultado);
+            $html = $this->mostrarDatos($resultado);
+            return $html;
+        } catch(Exception $e){
+            echo "Ha ocurrido un error: " . $e->getMessage();
+        }
+    }
+    
+    function consultarProducto($idProducto, $conectar){
+        $consulta = "SELECT id, nombre_producto, marca_producto, precio, descuento, cantidad 
+                     FROM productos 
+                     WHERE id = $idProducto";
+        $respuesta = mysqli_query($conectar, $consulta);
+        $resultado = mysqli_fetch_assoc($respuesta);
+        return $resultado;
+    }
+    
+    function mostrarDatos($resultado){
+        $idProducto = $resultado['id'];
+        $imagenes = $this->consultarImagenes($idProducto);
+        $html = $this->carruselImagenes($imagenes, $this->nombreProducto);
+        return $html;
+    }
+    
+    function consultarImagenes($idProducto){
+        $imagenes = $this->AccionesImagen->consultaImagenesProducto($idProducto);
+        return $imagenes;
+    }
+    
+    function carruselImagenes($imagenes, $nombreProducto){
+        $html = '';
+        foreach($imagenes as $img){
+            $html .= '<div class="carousel-item active">
+                        <img src="' . $img . '" alt="' . $nombreProducto . '">
+                      </div>';
+        }
+        return $html;
+    }
+    
+    function informacionProducto($resultado){
+        $this->nombreProducto = $resultado['nombre_producto'];
+        $this->precio = $resultado['precio'];
+        $this->porcentajeDescuento = $resultado['descuento'];
+        $this->descripcion = $resultado['marca_producto'];
+        $this->validarDescuento($this->precio, $this->porcentajeDescuento);
+    }
+
+    function validarDescuento($precio, $porcentajeDescuento){
+        if($porcentajeDescuento != 0){
+            $this->descuento = $precio * (1 - ($porcentajeDescuento / 100));
+        }
+    }
+
+    function imprimirDescuento(){
+        if($this->porcentajeDescuento != 0){
+            echo "$" . number_format($this->descuento, 2 , ',', '.');
+        } else {
+            echo "$" . number_format($this->precio, 2 , ',', '.');
+        }
+    }
+
+    function imprimirPrecioAntesDescuento(){
+        if($this->porcentajeDescuento != 0){
+            echo "$" . number_format($this->precio, 2 , ',', '.');
+        } else {
+            echo "";
+        }
     }
 
 }

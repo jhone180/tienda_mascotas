@@ -19,6 +19,18 @@ class AccionesImagen{
         $response = $query->fetch();
         return $response['ruta_imagen'];
     }
+
+    public function consultaImagenesProducto($idProducto){
+        $tabla = $this->obj->getNomTabla();
+        $query = $this->DAOImagen->connect()->prepare("SELECT ruta_imagen FROM $tabla WHERE id_producto = ?");
+        $query->execute([$idProducto]);
+        $response = $query->fetchAll(PDO::FETCH_ASSOC);
+        foreach($response as $res){
+            $imagenes[] = $res['ruta_imagen'];
+
+        }
+        return $imagenes;
+    }
 }
 
 ?>

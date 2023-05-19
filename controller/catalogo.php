@@ -1,7 +1,6 @@
 <?php
 
-require_once 'DAO/DAOCategorias.php';
-require_once 'models/categorias.php';
+
 
 class Catalogo extends Controller{
 
