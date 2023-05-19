@@ -10,7 +10,8 @@
     <?php require 'views/header.php'; ?>
     <div id="main">
     <form method="GET">
-          <label for="categorias">Filtrar por categoría:</label>
+          <label for="categorias"></label>
+          <h3 class="productos">Filtrar por categorias</h3>
           <select name="categorias" id="categorias">
           <option value="">Todos los productos</option>
             <?php

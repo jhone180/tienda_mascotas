@@ -24,7 +24,7 @@
                 <a href="<?php echo constant('URL') ?>registrarUsuario">Registrarse</a>
             </p>
             <p>
-                <input type="submit" value="Iniciar sesión">
+                <button type="submit" id="filtrar-btn">Iniciar Sesion</button>
             </p>
 
         </form>
