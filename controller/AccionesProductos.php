@@ -39,13 +39,15 @@ class AccionesProductos{
               $img = "img/nodisponible.jpg";
           }
           
-            $htmlResultados .= "<li>
+            $htmlResultados .="<li>
+                            <br>
                                   <img src='$img' alt='Producto 1'>
                                   <h2>$nombre_producto</h2>
                                   <p>$descripcion_prod</p>
                                   <span class='precio'>$" . number_format($precio, 2, ',', '.') . "</span>
                                   <a href='#' class='comprar'>Comprar</a>
                                   <button id='detalles-btn' class='detalles-btn' data-id='$id'>Detalles</button>
+                        
                                 </li>";
           }
 
